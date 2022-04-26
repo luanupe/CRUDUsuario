@@ -1,6 +1,10 @@
+import "reflect-metadata"
 import express from "express";
 import { HealthcheckRoutes } from "../routes/Healthcheck.routes";
 import { ErrorMiddleware } from "../middlewares/Error.middleware";
+
+import '../dependencies/usecases';
+import '../dependencies/controllers';
 
 export class Application {
 

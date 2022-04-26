@@ -1,16 +1,22 @@
+import { injectable, inject } from 'tsyringe';
 import { Request, Response, NextFunction } from 'express';
 import { AbstractController } from "../../contracts/Abstract.controller";
-import HealthcheckUsecase from "../../usecases/Healthcheck/Healthcheck.usecase";
+import { HealthcheckUsecase } from "../../usecases/Healthcheck/Healthcheck.usecase";
 
+@injectable()
 export class HealthcheckController extends AbstractController {
 
-    async handle(_request: Request, response: Response, next: NextFunction) {
+    constructor(
+        @inject('HealthcheckUsecase')
+        private healthcheckUsecase: HealthcheckUsecase,
+    ) {
+        super();
+    }
+
+    handle = (_request: Request, response: Response, next: NextFunction) => {
         try {
-            // Arrange
-            const useCase = new HealthcheckUsecase();
-    
             // Act
-            const result = useCase.run();
+            const result = this.healthcheckUsecase.run();
 
             // Response
             response.status(200).json(result);
