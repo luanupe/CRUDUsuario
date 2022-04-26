@@ -1,4 +1,5 @@
 import express from "express";
+import { HealthcheckRoutes } from "../routes/Healthcheck.routes";
 import { ErrorMiddleware } from "../middlewares/Error.middleware";
 
 export class Application {
@@ -13,6 +14,8 @@ export class Application {
 
     setupRoutes() {
         const router = express.Router();
+        HealthcheckRoutes.setup(router);
+
         this.server.use('/', router);
     }
 
