@@ -1,0 +1,22 @@
+{
+  "name": "liven-user-crud",
+  "version": "1.0.0",
+  "description": "Processo Seletivo Liven",
+  "main": "server.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "tsc && node dist/main.js"
+  },
+  "keywords": [
+    "liven"
+  ],
+  "author": "Luan Oliveira",
+  "license": "ISC",
+  "dependencies": {
+    "celebrate": "^15.0.1",
+    "express": "^4.18.0",
+    "mysql": "^2.18.1",
+    "typeorm": "^0.3.6",
+    "typescript": "^4.6.3"
+  }
+}
