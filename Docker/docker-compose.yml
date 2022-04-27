@@ -6,6 +6,7 @@ services:
         image: mysql:5.7.22
         environment:
             TZ: America/Recife
+            MYSQL_DATABASE: 'liven_crud'
             MYSQL_ROOT_PASSWORD: 'Root1234'
         volumes:
             - ../docker-entrypoint.d/mysql:/docker-entrypoint-initdb.d
@@ -23,6 +24,8 @@ services:
             dockerfile: Docker/Dockerfile
             args:
                 - ENV_FILE=../app/.env
+        volumes:
+            - ../app:/app
         networks:
             - network
         ports:
