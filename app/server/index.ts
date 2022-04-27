@@ -1,4 +1,5 @@
 import "reflect-metadata"
+
 import express from "express";
 import { HealthcheckRoutes } from "../routes/Healthcheck.routes";
 import { ErrorMiddleware } from "../middlewares/Error.middleware";
@@ -16,22 +17,21 @@ export class Application {
         this.port = Number(process.env.SERVER_PORT);
     }
 
-    setupRoutes() {
+    setupRoutes = () => {
         const router = express.Router();
         HealthcheckRoutes.setup(router);
-
         this.server.use('/', router);
     }
 
-    setupPostMiddleware() {
+    setupPostMiddleware = () => {
         const error = new ErrorMiddleware(this.server);
         error.setup();
-    }
+    };
 
-    start() {
+    start = () => {
         this.server.listen(this.port, () => {
             console.log(`Server running at ${this.port}`);
         });
-    }
+    };
 
 }
