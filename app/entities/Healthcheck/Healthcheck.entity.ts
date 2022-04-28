@@ -1,5 +1,5 @@
 export type HealthcheckEntity = {
-    name: string;
-    version: string;
+    aplicacao: string;
+    versao: string;
     uptime: number;
-}
+};

@@ -1,11 +1,14 @@
+import { injectable, Lifecycle, scoped } from "tsyringe";
 import { DataSource } from 'typeorm';
 import { Endereco } from '../models/Endereco.model';
 import { Usuario } from '../models/Usuario.model';
 
+@injectable()
+@scoped(Lifecycle.ContainerScoped)
 export class Connection {
 
+    private static DATA_SOURCE: DataSource;
     private options: any;
-    private dataSource: DataSource;
 
     constructor() {
         this.options = {
@@ -23,14 +26,22 @@ export class Connection {
               connectionLimit: process.env.DB_CONN_POOL,
             },
         };
-        console.log(JSON.stringify(this.options));
     }
 
-    setup = async () => {
-        this.dataSource = new DataSource(this.options);
-        const connection = await this.dataSource.initialize();
-        console.log('Database connection established');
-        return connection;
+    /* TODO Por algum motivo o tsyring está retornando 2 instâncias 
+    diferentes pelo @inject e pelo container.resolve, tornando o dataSource
+    null quando é a partir do @inject no constructor das classes */
+    setup = async (): Promise<DataSource> => {
+        if (!Connection.DATA_SOURCE) {
+            Connection.DATA_SOURCE = new DataSource(this.options);
+            await Connection.DATA_SOURCE.initialize();
+            console.log(`Database connection established at ${this.options.username}@${this.options.host}:${this.options.port}`);
+        }
+        return Connection.DATA_SOURCE;
+    };
+
+    getDataSource = () => {
+        return Connection.DATA_SOURCE;
     };
 
 }
