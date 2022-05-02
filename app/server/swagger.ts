@@ -16,7 +16,7 @@ export class Swagger {
 
     setup = () => {
         const options = this.getConfig();
-        this.server.use('/swagger', swaggerUi.serve, swaggerUi.setup(options));
+        this.server.use('/', swaggerUi.serve, swaggerUi.setup(options));
     };
 
     addPath = (path: string, method: string, definition: any) => {
