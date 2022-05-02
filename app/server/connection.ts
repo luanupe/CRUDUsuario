@@ -40,6 +40,13 @@ export class Connection {
         return Connection.DATA_SOURCE;
     };
 
+    destroy = async () => {
+        if (Connection.DATA_SOURCE) {
+            await Connection.DATA_SOURCE.destroy();
+            Connection.DATA_SOURCE = null;
+        }
+    };
+
     getDataSource = () => {
         return Connection.DATA_SOURCE;
     };
