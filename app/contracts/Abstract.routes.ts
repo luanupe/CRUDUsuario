@@ -5,10 +5,18 @@ export abstract class AbstractRoutes {
 
     protected router: Router;
 
-    constructor() {
+    constructor(protected prefix: string) {
         this.router = express.Router();
     }
 
-    abstract setup(server: Express, swagger: Swagger);
+    setup = (server: Express, swagger: Swagger) => {
+        this._setupRoutes();
+        this._setupSwagger(swagger);
+        server.use(this.prefix, this.router);
+    };
+
+    abstract _setupRoutes();
+
+    abstract _setupSwagger(swagger: Swagger);
 
 }

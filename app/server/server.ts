@@ -1,6 +1,9 @@
 import "reflect-metadata"
 import express, { Express } from "express";
+import bodyParser from "body-parser";
 import { Swagger } from "./swagger";
+import { ErrorMiddleware } from "../middlewares/Error.middleware";
+import { UsuarioRoutes } from "../routes/Usuario.routes";
 import { HealthcheckRoutes } from "../routes/Healthcheck.routes";
 
 import '../dependencies/server';
@@ -20,14 +23,28 @@ export class Application {
         this.swagger = new Swagger(this.server);
     }
 
+    setupPreMiddleware = () => {
+        this.server.use(bodyParser.json());
+        this.server.use(bodyParser.urlencoded({ extended: false }));
+    };
+
     setupRoutes = () => {
         // HealthCheck
         const healthCheckRouter = new HealthcheckRoutes('/healthcheck');
         healthCheckRouter.setup(this.server, this.swagger);
 
+        // Usuário
+        const usuarioRouter = new UsuarioRoutes('/usuario');
+        usuarioRouter.setup(this.server, this.swagger);
+
         // Swagger
         this.swagger.setup();
     }
+
+    setupPostMiddleware = () => {
+        const error = new ErrorMiddleware(this.server);
+        error.setup();
+    };
 
     start = () => {
         this.server.listen(this.port, () => {

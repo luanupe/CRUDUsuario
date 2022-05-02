@@ -17,10 +17,10 @@ export class Usuario {
     senha: string;
 
     @Column({ length: 11, unique: true, nullable: true })
-    cpf: string;
+    cpf?: string;
 
     @Column({ length: 11, nullable: true })
-    telefone: string;
+    telefone?: string;
 
     @Column({ nullable: false })
     comunicacoes: boolean;
@@ -29,9 +29,9 @@ export class Usuario {
     criadoEm: Date;
 
     @Column({ nullable: true })
-    atualizadoEm: Date;
+    atualizadoEm?: Date;
 
     @OneToMany(() => Endereco, endereco => endereco.usuario, { cascade: true })
-    enderecos: Endereco[];
+    enderecos?: Endereco[];
 
 }

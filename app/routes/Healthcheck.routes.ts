@@ -9,17 +9,17 @@ export class HealthcheckRoutes extends AbstractRoutes {
 
     private healthcheckController: HealthcheckController;
 
-    constructor(private prefix: string) {
-        super();
+    constructor(protected prefix: string) {
+        super(prefix);
         this.healthcheckController = container.resolve(HealthcheckController);
     }
 
-    setup = (server: Express, swagger: Swagger) => {
+    _setupRoutes = () => {
         this.router.get('/', this.healthcheckController.handle);
+    };
 
+    _setupSwagger = (swagger: Swagger) => {
         swagger.addPath(this.prefix, 'get', healthcheckSwagger.documentation);
-
-        server.use(this.prefix, this.router);
     };
 
 }

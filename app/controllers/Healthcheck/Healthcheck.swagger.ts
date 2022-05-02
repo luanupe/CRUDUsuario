@@ -11,7 +11,7 @@ const successExamples = {
     HEALTHCHECK_SUCCESS: {
         summary: 'Saúde OK',
         value: {
-            aplicacao: 'liven-user-crud',
+            aplicacao: 'user-address-crud',
             versao: '1.0.0',
             uptime: 22.521048626,
         },
