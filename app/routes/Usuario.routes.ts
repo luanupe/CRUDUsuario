@@ -13,6 +13,8 @@ import { VisualizarUsuarioController } from '../controllers/Usuario/Visualizar/V
 import * as atualizarUsuarioSwagger from '../controllers/Usuario/Atualizar/AtualizarUsuario.swagger';
 import { AtualizarUsuarioValidator } from '../controllers/Usuario/Atualizar/AtualizarUsuario.validator';
 import { AtualizarUsuarioController } from '../controllers/Usuario/Atualizar/AtualizarUsuario.controller';
+import * as deletarUsuarioSwagger from '../controllers/Usuario/Deletar/DeletarUsuario.swagger';
+import { DeletarUsuarioController } from '../controllers/Usuario/Deletar/DeletarUsuario.controller';
 
 export class UsuarioRoutes extends AbstractRoutes {
 
@@ -21,6 +23,7 @@ export class UsuarioRoutes extends AbstractRoutes {
     private cadastrarUsuarioController: CadastrarUsuarioController;
     private visualizarUsuarioController: VisualizarUsuarioController;
     private atualizarUsuarioController: AtualizarUsuarioController;
+    private deletarUsuarioController: DeletarUsuarioController;
 
     constructor(protected prefix: string) {
         super(prefix);
@@ -29,6 +32,7 @@ export class UsuarioRoutes extends AbstractRoutes {
         this.cadastrarUsuarioController = container.resolve(CadastrarUsuarioController);
         this.visualizarUsuarioController = container.resolve(VisualizarUsuarioController);
         this.atualizarUsuarioController = container.resolve(AtualizarUsuarioController);
+        this.deletarUsuarioController = container.resolve(DeletarUsuarioController);
     }
 
     _setupRoutes = () => {
@@ -56,6 +60,12 @@ export class UsuarioRoutes extends AbstractRoutes {
             AtualizarUsuarioValidator.validate,
             this.atualizarUsuarioController.handle,
         );
+
+        this.router.delete(
+            '/deletar',
+            this.jwtMiddleware.validate,
+            this.deletarUsuarioController.handle,
+        );
     };
 
     _setupSwagger = (swagger: Swagger) => {
@@ -63,6 +73,7 @@ export class UsuarioRoutes extends AbstractRoutes {
         swagger.addPath(`${this.prefix}/cadastrar`, 'post', cadastrarUsuarioSwagger.documentation);
         swagger.addPath(`${this.prefix}/visualizar`, 'get', visualizarUsuarioSwagger.documentation);
         swagger.addPath(`${this.prefix}/atualizar`, 'put', atualizarUsuarioSwagger.documentation);
+        swagger.addPath(`${this.prefix}/deletar`, 'delete', deletarUsuarioSwagger.documentation);
     };
 
 }
