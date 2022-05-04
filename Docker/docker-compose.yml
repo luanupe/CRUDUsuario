@@ -8,8 +8,6 @@ services:
             TZ: America/Recife
             MYSQL_DATABASE: 'liven_crud'
             MYSQL_ROOT_PASSWORD: 'Root1234'
-        volumes:
-            - ../docker-entrypoint.d/mysql:/docker-entrypoint-initdb.d
         networks:
             - network
         ports:
