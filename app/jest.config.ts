@@ -30,6 +30,9 @@ export default {
     "node_modules/",
     "dist/",
     "coverage/",
+    "server/",
+    "dependencies/",
+    "routes/",
   ],
 
   // Indicates which provider should be used to instrument code for coverage

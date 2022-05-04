@@ -9,6 +9,8 @@ import { HealthcheckRoutes } from "../routes/Healthcheck.routes";
 import '../dependencies/server';
 import '../dependencies/repositories';
 import '../dependencies/usecases';
+import '../dependencies/services';
+import '../dependencies/middlewares';
 import '../dependencies/controllers';
 
 export class Application {

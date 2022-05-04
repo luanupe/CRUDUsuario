@@ -1,3 +1,21 @@
+type ApplicationErrorType = {
+    field: string;
+    summary: string;
+    message: string;
+};
+
+const getApplicationErrorExamples = (data: ApplicationErrorType[]) => {
+    const examples = {};
+
+    data.forEach((input: ApplicationErrorType) => {
+        const name = input.field.charAt(0).toUpperCase() + input.field.slice(1);
+        const example = { summary: input.summary, value: { message: input.message, details: `${name}Error` } };
+        examples[input.field] = example;
+    });
+
+    return examples;
+};
+
 // Response: Generic Error
 
 export const genericErrorSchema = {
@@ -85,26 +103,28 @@ export const getValidationErrorResponse = (fields: string[]) => {
     };
 };
 
-export const getApplicationErrorResponse = (fields: string[]) => {
-    const examples = {};
-
-    // Montar exemplos
-    fields.forEach((field: string) => {
-        const name = field.charAt(0).toUpperCase() + field.slice(1);
-        examples[name] = {
-            summary: `Erro da aplicação ao validar ${field}`,
-            value: { message: `Não foi possível confirmar o ${field}`, details: `${name}Error` },
-        };
-    });
-
-    // Montar response
+export const getApplicationErrorResponse = (description: string, data: ApplicationErrorType[]) => {
     return {
-        description: 'Erro interno da aplicação',
+        description: description,
         content: {
             'application/json': {
                 schema: applicationErrorSchema,
-                examples,
+                examples: getApplicationErrorExamples(data),
             }
         },
     };
+};
+
+export const getGenericFieldsApplicationErrorResponse = (fields: string[]) => {
+    const data: ApplicationErrorType[] = [];
+
+    // Montar exemplos
+    fields.forEach((field: string) => {
+        const summary = `Erro da aplicação ao validar ${field}`;
+        const message = `Não foi possível confirmar o ${field}`;
+        data.push({ field, summary, message });
+    });
+
+    // Response
+    return getApplicationErrorResponse('Erro interno da aplicação', data);
 };

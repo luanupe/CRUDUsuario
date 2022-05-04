@@ -1,9 +1,46 @@
 import { CelebrateError } from 'celebrate';
 import { Response } from 'express';
+import { JsonWebTokenError } from 'jsonwebtoken';
 import { AbstractError } from "../contracts/Abstract.error";
 import { ErrorMiddleware } from "./Error.middleware";
 
 describe('Testando Error Middleware', () => {
+    describe('Testando método handleAuthenticationError', () => {
+        it('Deve chamar next quando não é error do tipo AbstractError', () => {
+            // Arrange
+            const error = new Error('Erro genérico');
+            const next = jest.fn();
+
+            // Act
+            const sut = new ErrorMiddleware(null);
+            sut._handleAuthenticationError(error, null, null, next);
+
+            // Assert
+            expect(next).toHaveBeenCalledTimes(1);
+            expect(next).toHaveBeenCalledWith(error);
+        }, 5000);
+        it('Deve enviar response se error for do tipo AbstractError', (done) => {
+            // Arrange
+            const message = 'Erro da aplicação';
+            const error = new JsonWebTokenError(message);
+
+            const response = {
+                status: (statusCode: number) => {
+                    expect(statusCode).toBe(401);
+                    return {
+                        json: (data: any) => {
+                            expect(data).toHaveProperty('message', message);
+                            done();
+                        },
+                    };
+                },
+            } as Response;
+
+            // Act
+            const sut = new ErrorMiddleware(null);
+            sut._handleAuthenticationError(error, null, response, null);
+        }, 5000);
+    });
     describe('Testando método handleApplicationError', () => {
         it('Deve chamar next quando não é error do tipo AbstractError', () => {
             // Arrange
