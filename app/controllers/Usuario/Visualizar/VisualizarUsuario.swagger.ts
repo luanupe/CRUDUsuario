@@ -31,9 +31,9 @@ const addressMock = {
     cep: faker.address.zipCode(),
 };
 
-const userRequired = [ 'id', ...userRequiredSignup ];
+export const userRequired = [ 'id', ...userRequiredSignup ];
 
-const userSchema = {
+export const userSchema = {
     id: { type: 'integer' },
     ...userSchemaSignup,
     endereco: {
@@ -43,7 +43,7 @@ const userSchema = {
     },
 };
 
-const userMock = {
+export const userMock = {
     id: faker.datatype.number(),
     ...userMockSignup,
     endereco: [ {...addressMock} ],
