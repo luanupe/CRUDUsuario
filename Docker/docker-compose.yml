@@ -6,7 +6,7 @@ services:
         image: mysql:5.7.22
         environment:
             TZ: America/Recife
-            MYSQL_DATABASE: 'liven_crud'
+            MYSQL_DATABASE: 'crud_usuario'
             MYSQL_ROOT_PASSWORD: 'Root1234'
         networks:
             - network
@@ -20,10 +20,6 @@ services:
         build:
             context: ../
             dockerfile: Docker/Dockerfile
-            args:
-                - ENV_FILE=../app/.env
-        volumes:
-            - ../app:/app
         networks:
             - network
         ports:
