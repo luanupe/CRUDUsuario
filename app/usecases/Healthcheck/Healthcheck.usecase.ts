@@ -1,5 +1,5 @@
 import { injectable } from "tsyringe";
-import { HealthcheckEntity } from "../../entities/Healthcheck/Healthcheck.entity";
+import { HealthcheckEntity } from "../../entities/Healthcheck.entity";
 
 @injectable()
 export class HealthcheckUsecase {

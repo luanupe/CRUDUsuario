@@ -1,5 +1,6 @@
 import { injectable, inject } from 'tsyringe';
 import { Request, Response, NextFunction } from 'express';
+import { HealthcheckEntity } from '../../entities/Healthcheck.entity';
 import { AbstractController } from "../../contracts/Abstract.controller";
 import { HealthcheckUsecase } from "../../usecases/Healthcheck/Healthcheck.usecase";
 
@@ -16,7 +17,7 @@ export class HealthcheckController extends AbstractController {
     handle = (_request: Request, response: Response, next: NextFunction) => {
         try {
             // Act
-            const result = this.healthcheckUsecase.run();
+            const result: HealthcheckEntity = this.healthcheckUsecase.run();
 
             // Response
             response.status(200).json(result);
