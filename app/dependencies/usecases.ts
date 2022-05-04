@@ -3,6 +3,7 @@ import { HealthcheckUsecase } from '../usecases/Healthcheck/Healthcheck.usecase'
 import { AutenticarUsuarioUsecase } from '../usecases/Usuario/AutenticarUsuario.usecase';
 import { CadastrarUsuarioUsecase } from '../usecases/Usuario/CadastrarUsuario.usecase';
 import { BuscarUsuarioUsecase } from '../usecases/Usuario/BuscarUsuario.usecase';
+import { AtualizarUsuarioUsecase } from '../usecases/Usuario/AtualizarUsuario.usecase';
 
 // HealthCheck
 
@@ -26,4 +27,9 @@ container.registerSingleton<CadastrarUsuarioUsecase>(
 container.registerSingleton<BuscarUsuarioUsecase>(
     'BuscarUsuarioUsecase',
     BuscarUsuarioUsecase,
+);
+
+container.registerSingleton<AtualizarUsuarioUsecase>(
+    'AtualizarUsuarioUsecase',
+    AtualizarUsuarioUsecase,
 );

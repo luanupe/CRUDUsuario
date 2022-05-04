@@ -7,7 +7,7 @@ import { mapUsuario } from "./Usuario.adapter";
 describe('Testando Usuario Adapter', () => {
     it('Deve mapear campos com sucesso', () => {
         // Arrange
-        const usuario: Usuario = {
+        const usuario = {
             id: faker.datatype.number(),
             nome: faker.name.findName(),
             email: faker.internet.email(),
@@ -16,7 +16,7 @@ describe('Testando Usuario Adapter', () => {
             telefone: faker.phone.phoneNumber('############'),
             comunicacoes: faker.datatype.boolean(),
             criadoEm: faker.datatype.datetime(),
-        };
+        } as Usuario;
 
         // Act
         const result: UsuarioEntity = mapUsuario(usuario);

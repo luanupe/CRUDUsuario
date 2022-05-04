@@ -103,7 +103,7 @@ const applicationErrorSchema = {
 // Responses
 
 export const unAuthorizedErrorResponse = {
-    description: 'Erro genérico da aplicação',
+    description: 'Erro de autorização de cookie',
     content: {
         'application/json': {
             schema: unAuthorizedErrorSchema,

@@ -2,7 +2,7 @@ import { Request } from 'express';
 import { faker } from "@faker-js/faker";
 import { isCelebrateError } from 'celebrate';
 import { Usuario } from "../../../models/Usuario.model";
-import { CadastrarUsuarioValidator } from "./CadastrarUsuario.validator";
+import { AtualizarUsuarioValidator } from "./AtualizarUsuario.validator";
 
 const data: Partial<Usuario> = {
     nome: faker.name.findName(),
@@ -13,7 +13,7 @@ const data: Partial<Usuario> = {
     cpf: '42104277051', // CPF válido 4devs
 };
 
-describe('Testando CadastrarUsuario Validator', () => {
+describe('Testando AtualizarUsuario Validator', () => {
     it('Deve validar com sucesso', (done) => {
         // Arrange
         const request: Request = {
@@ -27,28 +27,9 @@ describe('Testando CadastrarUsuario Validator', () => {
         };
 
         // Act
-        CadastrarUsuarioValidator.validate(request, null, next);
+        AtualizarUsuarioValidator.validate(request, null, next);
     }, 5000);
     describe('Testando body "nome"', () => {
-        it('Deve falhar pois campo é obrigatório', (done) => {
-            // Arrange
-            const input = {...data};
-            delete input.nome;
-            
-            const request: Request = {
-                body: input,
-                method: 'post',
-            } as any as Request;
-            
-            const next = (error) => {
-                expect(isCelebrateError(error)).toBeTruthy();
-                expect(error.details.get('body').message).toBe('"nome" is required');
-                done();
-            };
-
-            // Act
-            CadastrarUsuarioValidator.validate(request, null, next);
-        }, 5000);
         it('Deve falhar pois valor é muito grande', (done) => {
             // Arrange
             const input = {...data, nome: faker.datatype.string(300)};
@@ -65,29 +46,10 @@ describe('Testando CadastrarUsuario Validator', () => {
             };
 
             // Act
-            CadastrarUsuarioValidator.validate(request, null, next);
+            AtualizarUsuarioValidator.validate(request, null, next);
         }, 5000);
     });
     describe('Testando body "email"', () => {
-        it('Deve falhar pois campo é obrigatório', (done) => {
-            // Arrange
-            const input = {...data};
-            delete input.email;
-            
-            const request: Request = {
-                body: input,
-                method: 'post',
-            } as any as Request;
-            
-            const next = (error) => {
-                expect(isCelebrateError(error)).toBeTruthy();
-                expect(error.details.get('body').message).toBe('"email" is required');
-                done();
-            };
-
-            // Act
-            CadastrarUsuarioValidator.validate(request, null, next);
-        }, 5000);
         it('Deve falhar pois valor não está num formato de e-mail', (done) => {
             // Arrange
             const input = {...data, email: faker.datatype.string()};
@@ -104,29 +66,10 @@ describe('Testando CadastrarUsuario Validator', () => {
             };
 
             // Act
-            CadastrarUsuarioValidator.validate(request, null, next);
+            AtualizarUsuarioValidator.validate(request, null, next);
         }, 5000);
     });
     describe('Testando body "senha"', () => {
-        it('Deve falhar pois campo é obrigatório', (done) => {
-            // Arrange
-            const input = {...data};
-            delete input.senha;
-            
-            const request: Request = {
-                body: input,
-                method: 'post',
-            } as any as Request;
-            
-            const next = (error) => {
-                expect(isCelebrateError(error)).toBeTruthy();
-                expect(error.details.get('body').message).toBe('"senha" is required');
-                done();
-            };
-
-            // Act
-            CadastrarUsuarioValidator.validate(request, null, next);
-        }, 5000);
         it('Deve falhar pois campo é muito curto', (done) => {
             // Arrange
             const input = {...data, senha: '12345'};
@@ -143,29 +86,10 @@ describe('Testando CadastrarUsuario Validator', () => {
             };
 
             // Act
-            CadastrarUsuarioValidator.validate(request, null, next);
+            AtualizarUsuarioValidator.validate(request, null, next);
         }, 5000);
     });
     describe('Testando body "comunicacoes"', () => {
-        it('Deve falhar pois campo é obrigatório', (done) => {
-            // Arrange
-            const input = {...data};
-            delete input.comunicacoes;
-            
-            const request: Request = {
-                body: input,
-                method: 'post',
-            } as any as Request;
-            
-            const next = (error) => {
-                expect(isCelebrateError(error)).toBeTruthy();
-                expect(error.details.get('body').message).toBe('"comunicacoes" is required');
-                done();
-            };
-
-            // Act
-            CadastrarUsuarioValidator.validate(request, null, next);
-        }, 5000);
         it('Deve falhar pois valor deve ser booleano', (done) => {
             // Arrange
             const input = {...data, comunicacoes: 'aaa'};
@@ -182,7 +106,7 @@ describe('Testando CadastrarUsuario Validator', () => {
             };
 
             // Act
-            CadastrarUsuarioValidator.validate(request, null, next);
+            AtualizarUsuarioValidator.validate(request, null, next);
         }, 5000);
     });
     describe('Testando body "telefone"', () => {
@@ -202,7 +126,7 @@ describe('Testando CadastrarUsuario Validator', () => {
             };
 
             // Act
-            CadastrarUsuarioValidator.validate(request, null, next);
+            AtualizarUsuarioValidator.validate(request, null, next);
         }, 5000);
         it('Deve falhar pois valor é muito grande', (done) => {
             // Arrange
@@ -220,7 +144,7 @@ describe('Testando CadastrarUsuario Validator', () => {
             };
 
             // Act
-            CadastrarUsuarioValidator.validate(request, null, next);
+            AtualizarUsuarioValidator.validate(request, null, next);
         }, 5000);
         it('Deve falhar pois valor deve ser string numerica', (done) => {
             // Arrange
@@ -238,7 +162,7 @@ describe('Testando CadastrarUsuario Validator', () => {
             };
 
             // Act
-            CadastrarUsuarioValidator.validate(request, null, next);
+            AtualizarUsuarioValidator.validate(request, null, next);
         }, 5000);
     });
     describe('Testando body "cpf"', () => {
@@ -258,7 +182,7 @@ describe('Testando CadastrarUsuario Validator', () => {
             };
 
             // Act
-            CadastrarUsuarioValidator.validate(request, null, next);
+            AtualizarUsuarioValidator.validate(request, null, next);
         }, 5000);
         it('Deve falhar pois valor é muito grande', (done) => {
             // Arrange
@@ -276,7 +200,7 @@ describe('Testando CadastrarUsuario Validator', () => {
             };
 
             // Act
-            CadastrarUsuarioValidator.validate(request, null, next);
+            AtualizarUsuarioValidator.validate(request, null, next);
         }, 5000);
         it('Deve falhar pois valor não é válido', (done) => {
             // Arrange
@@ -294,7 +218,7 @@ describe('Testando CadastrarUsuario Validator', () => {
             };
 
             // Act
-            CadastrarUsuarioValidator.validate(request, null, next);
+            AtualizarUsuarioValidator.validate(request, null, next);
         }, 5000);
     });
 });
