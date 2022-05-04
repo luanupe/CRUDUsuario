@@ -4,6 +4,7 @@ import { AutenticarUsuarioController } from '../controllers/Usuario/Autenticar/A
 import { CadastrarUsuarioController } from '../controllers/Usuario/Cadastrar/CadastrarUsuario.controller';
 import { VisualizarUsuarioController } from '../controllers/Usuario/Visualizar/VisualizarUsuario.controller';
 import { AtualizarUsuarioController } from '../controllers/Usuario/Atualizar/AtualizarUsuario.controller';
+import { DeletarUsuarioController } from '../controllers/Usuario/Deletar/DeletarUsuario.controller';
 
 // HealthCheck
 
@@ -32,4 +33,9 @@ container.registerSingleton<VisualizarUsuarioController>(
 container.registerSingleton<AtualizarUsuarioController>(
     'AtualizarUsuarioController',
     AtualizarUsuarioController,
+);
+
+container.registerSingleton<DeletarUsuarioController>(
+    'DeletarUsuarioController',
+    DeletarUsuarioController,
 );
