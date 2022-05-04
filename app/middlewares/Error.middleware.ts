@@ -1,7 +1,8 @@
 import { NextFunction, Request, Response, Express } from 'express';
+import { JsonWebTokenError } from 'jsonwebtoken';
+import { isCelebrateError } from 'celebrate';
 import { AbstractMiddleware } from '../contracts/Abstract.middleware';
 import { AbstractError } from '../contracts/Abstract.error';
-import { isCelebrateError } from 'celebrate';
 
 export class ErrorMiddleware extends AbstractMiddleware {
 
@@ -10,10 +11,19 @@ export class ErrorMiddleware extends AbstractMiddleware {
     }
 
     setup = () => {
+        this.server.use(this._handleAuthenticationError);
         this.server.use(this._handleApplicationError);
         this.server.use(this._handleJoiCelebrateError);
         this.server.use(this._handleDefaultError);
     };
+
+    public _handleAuthenticationError = (error: Error, _request: Request, response: Response, next: NextFunction) => {
+        if (error instanceof JsonWebTokenError) {
+            const result = { message: error.message, details: error };
+            return response.status(401).json(result);
+        }
+        next(error);
+    }
 
     public _handleApplicationError = (error: Error, _request: Request, response: Response, next: NextFunction) => {
         if (error instanceof AbstractError) {
