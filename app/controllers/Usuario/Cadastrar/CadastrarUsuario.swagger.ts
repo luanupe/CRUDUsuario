@@ -1,11 +1,11 @@
 // Mocks
 
 import { faker } from "@faker-js/faker";
-import { genericErrorResponse, getValidationErrorResponse, getApplicationErrorResponse } from "../../../contracts/Abstract.swagger";
+import { genericErrorResponse, getValidationErrorResponse, getGenericFieldsApplicationErrorResponse } from "../../../contracts/Abstract.swagger";
 
-const userRequired = [ 'nome', 'email', 'comunicacoes' ];
+export const userRequired = [ 'nome', 'email', 'comunicacoes' ];
 
-const userSchema = {
+export const userSchema = {
     nome: { type: 'string' },
     email: { type: 'string' },
     comunicacoes: { type: 'boolean' },
@@ -13,7 +13,7 @@ const userSchema = {
     telefone: { type: 'string' },
 };
 
-const userMock = {
+export const userMock = {
     nome: faker.name.findName(),
     email: faker.internet.email(),
     cpf: faker.phone.phoneNumber('###########'),
@@ -54,7 +54,7 @@ const responses = {
         },
     },
     422: getValidationErrorResponse([ 'nome', 'telefone' ]),
-    412: getApplicationErrorResponse([ 'email', 'cpf' ]),
+    412: getGenericFieldsApplicationErrorResponse([ 'email', 'cpf' ]),
     500: genericErrorResponse,
 };
 
