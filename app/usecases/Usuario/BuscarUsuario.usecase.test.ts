@@ -31,11 +31,11 @@ const id = faker.datatype.number();
 const usuarioRepository = new UsuarioRepository(null);
 const enderecoRepository = new EnderecoRepository(null);
 
-describe('Testando BuscarUsuario Usecase', () => {
+describe('Testando BuscarUsuarioUsecase', () => {
     beforeEach(() => {
         jest.clearAllMocks();
     });
-    it('Deve lançar EmailEmUsoError caso o id não esteja em uso', async () => {
+    it('Deve lançar NaoEncontradoError caso o id não esteja em uso', async () => {
         // Spy
         const getByIdSpy = jest.spyOn(usuarioRepository, 'getById');
         const getByUsuarioSpy = jest.spyOn(enderecoRepository, 'getByUsuario');
