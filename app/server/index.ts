@@ -1,6 +1,5 @@
 import "reflect-metadata"
 import "./environment"
-
 import { container } from 'tsyringe';
 import { Application } from './server';
 import { Connection } from './connection';
