@@ -1,6 +1,6 @@
 .ONESHELL:
 SHELL:=/bin/bash
-PROJECT_NAME:=liven
+PROJECT_NAME:=crud_usuario
 
 start: ; @\
   clear; \
