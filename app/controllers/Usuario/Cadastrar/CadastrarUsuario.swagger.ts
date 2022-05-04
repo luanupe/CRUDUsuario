@@ -1,7 +1,7 @@
-// Mocks
-
 import { faker } from "@faker-js/faker";
 import { genericErrorResponse, getValidationErrorResponse, getGenericFieldsApplicationErrorResponse } from "../../../contracts/Abstract.swagger";
+
+// Mocks
 
 export const userRequired = [ 'nome', 'email', 'comunicacoes' ];
 
@@ -38,8 +38,6 @@ const successExamples = {
         value: { id: faker.datatype.number(), ...userMock },
     },
 };
-
-// Response: Precondition Failed
 
 // Responses
 

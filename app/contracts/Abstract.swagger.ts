@@ -16,6 +16,41 @@ const getApplicationErrorExamples = (data: ApplicationErrorType[]) => {
     return examples;
 };
 
+// Response: unAuthorized error
+
+const unAuthorizedErrorSchema = {
+    type: 'object',
+    required: [ 'message', 'details' ],
+    properties: {
+        message: { type: 'string' },
+        details: { type: 'object' },
+    },
+};
+
+const unAuthorizedErrorExamples = {
+    MISSING_COOKIE: {
+        summary: 'Cookie "authorization" ausente',
+        value: {
+            message: 'Token de autorização não informado.',
+            details: { }
+        },
+    },
+    INVALID_COOKIE: {
+        summary: 'Cookie "authorization" inválido',
+        value: {
+            message: 'Cookie de autorização mal formatado.',
+            details: { }
+        },
+    },
+    INVALID_METHOD: {
+        summary: 'Método de autenticação do Cookie "authorization" inválido',
+        value: {
+            message: 'Método de autenticação Basic não autorizado.',
+            details: { }
+        },
+    },
+};
+
 // Response: Generic Error
 
 export const genericErrorSchema = {
@@ -66,6 +101,16 @@ const applicationErrorSchema = {
 };
 
 // Responses
+
+export const unAuthorizedErrorResponse = {
+    description: 'Erro genérico da aplicação',
+    content: {
+        'application/json': {
+            schema: unAuthorizedErrorSchema,
+            examples: unAuthorizedErrorExamples,
+        }
+    },
+};
 
 export const genericErrorResponse = {
     description: 'Erro genérico da aplicação',

@@ -1,3 +1,5 @@
+import { EnderecoEntity } from "./Endereco.entity";
+
 export type UsuarioEntity = {
     id: number;
     nome: string;
@@ -5,4 +7,5 @@ export type UsuarioEntity = {
     comunicacoes: boolean;
     cpf?: string;
     telefone?: string;
+    enderecos?: EnderecoEntity[];
 };
