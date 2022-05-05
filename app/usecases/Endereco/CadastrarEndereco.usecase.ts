@@ -12,9 +12,9 @@ export class CadastrarEnderecoUsecase {
         private enderecoRepository: EnderecoRepository,
     ) {}
 
-    run = async (data: Partial<Endereco>): Promise<EnderecoEntity> => {
+    run = async (usuarioId: number, data: Partial<Endereco>): Promise<EnderecoEntity> => {
         // Criar endereço
-        const id = await this.enderecoRepository.insert(data);
+        const id = await this.enderecoRepository.insert({...data,usuarioId});
 
         // Buscar endereço
         const endereco = await this.enderecoRepository.getById(id);

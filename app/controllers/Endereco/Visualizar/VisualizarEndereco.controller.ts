@@ -18,7 +18,7 @@ export class VisualizarEnderecoController extends AbstractController {
         try {
             // Retrieve data
             const usuarioId = request.usuario.id;
-            const enderecoId = request.params.enderecoId;
+            const enderecoId = Number(request.params.enderecoId);
 
             // Act
             const result: EnderecoEntity = await this.buscarEnderecoUsecase.run(usuarioId, enderecoId);

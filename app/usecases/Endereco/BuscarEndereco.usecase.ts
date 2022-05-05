@@ -13,7 +13,7 @@ export class BuscarEnderecoUsecase {
         private enderecoRepository: EnderecoRepository,
     ) {}
 
-    run = async (usuarioId: number, enderecoId): Promise<EnderecoEntity> => {
+    run = async (usuarioId: number, enderecoId: number): Promise<EnderecoEntity> => {
         // Buscar endereço
         const endereco: Endereco = await this.enderecoRepository.getByUsuarioAndId(usuarioId, enderecoId);
         if (!endereco) throw new NaoEncontradoError(usuarioId, enderecoId);

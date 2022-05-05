@@ -15,6 +15,7 @@ jest.mock('../../repositories/Endereco.repository', () => {
     };
 });
 
+const usuarioId = faker.datatype.number();
 const id = faker.datatype.number();
 
 const enderecoMock: Partial<Endereco> = {
@@ -44,12 +45,12 @@ describe('Testando CadastrarEnderecoUsecase', () => {
         
         // Act
         const sut = new CadastrarEnderecoUsecase(enderecoRepository);
-        const result = await sut.run(enderecoMock);
+        const result = await sut.run(usuarioId, enderecoMock);
 
         // Assert
         expect(result).toBeTruthy();
         expect(insertSpy).toHaveBeenCalledTimes(1);
-        expect(insertSpy).toHaveBeenCalledWith(enderecoMock);
+        expect(insertSpy).toHaveBeenCalledWith({...enderecoMock,usuarioId});
         expect(getByIdSpy).toHaveBeenCalledTimes(1);
         expect(getByIdSpy).toHaveBeenCalledWith(id);
     }, 5000);

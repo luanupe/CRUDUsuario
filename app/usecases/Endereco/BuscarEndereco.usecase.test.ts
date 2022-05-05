@@ -1,10 +1,9 @@
 import "reflect-metadata";
 import { faker } from "@faker-js/faker";
 import { Endereco } from "../../models/Endereco.model";
-import { EnderecoRepository } from "../../repositories/Endereco.repository";
-import { CadastrarEnderecoUsecase } from "./CadastrarEndereco.usecase";
-import { BuscarEnderecoUsecase } from "./BuscarEndereco.usecase";
 import { NaoEncontradoError } from "../../errors/Endereco/NaoEncontrado.error";
+import { EnderecoRepository } from "../../repositories/Endereco.repository";
+import { BuscarEnderecoUsecase } from "./BuscarEndereco.usecase";
 
 jest.mock('../../repositories/Endereco.repository', () => {
     return {
@@ -18,17 +17,6 @@ jest.mock('../../repositories/Endereco.repository', () => {
 
 const usuarioId = faker.datatype.number();
 const enderecoId = faker.datatype.number();
-
-const enderecoMock: Partial<Endereco> = {
-    logradouro: faker.address.streetName(),
-    numero: faker.address.buildingNumber(),
-    bairro: faker.address.streetAddress(),
-    cidade: faker.address.cityName(),
-    estado: faker.address.state(),
-    pais: faker.address.country(),
-    cep: faker.address.zipCode(),
-};
-
 const enderecoRepository = new EnderecoRepository(null);
 
 describe('Testando BuscarEnderecoUsecase', () => {
