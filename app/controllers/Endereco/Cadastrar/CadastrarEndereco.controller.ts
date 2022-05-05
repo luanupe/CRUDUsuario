@@ -27,8 +27,8 @@ export class CadastrarEnderecoController extends AbstractController {
             const cep = request.body.cep;
 
             // Act
-            const data = { logradouro, numero, bairro, cidade, estado, pais, cep, usuarioId: id };
-            const result: EnderecoEntity = await this.cadastrarEnderecoUsecase.run(data);
+            const data = { logradouro, numero, bairro, cidade, estado, pais, cep };
+            const result: EnderecoEntity = await this.cadastrarEnderecoUsecase.run(id, data);
 
             // OK
             response.status(200).json(result);

@@ -2,14 +2,14 @@ import { injectable, inject } from 'tsyringe';
 import { Request, Response, NextFunction } from 'express';
 import { EnderecoEntity } from '../../../entities/Endereco.entity';
 import { AbstractController } from "../../../contracts/Abstract.controller";
-import { BuscarEnderecoUsecase } from '../../../usecases/Endereco/BuscarEndereco.usecase';
+import { RemoverEnderecoUsecase } from '../../../usecases/Endereco/RemoverEndereco.usecase';
 
 @injectable()
-export class VisualizarEnderecoController extends AbstractController {
+export class DeletarEnderecoController extends AbstractController {
 
     constructor(
-        @inject('BuscarEnderecoUsecase')
-        private buscarEnderecoUsecase: BuscarEnderecoUsecase,
+        @inject('RemoverEnderecoUsecase')
+        private removerEnderecoUsecase: RemoverEnderecoUsecase,
     ) {
         super();
     }
@@ -21,7 +21,7 @@ export class VisualizarEnderecoController extends AbstractController {
             const enderecoId = Number(request.params.enderecoId);
 
             // Act
-            const result: EnderecoEntity = await this.buscarEnderecoUsecase.run(usuarioId, enderecoId);
+            const result: EnderecoEntity = await this.removerEnderecoUsecase.run(usuarioId, enderecoId);
 
             // OK
             response.status(200).json(result);
