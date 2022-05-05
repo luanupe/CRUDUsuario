@@ -1,5 +1,5 @@
 import { injectable, inject } from "tsyringe";
-import { Repository } from "typeorm";
+import { FindOptionsWhere, Repository } from "typeorm";
 import { Connection } from "../server/connection";
 import { Endereco } from "../models/Endereco.model";
 
@@ -19,8 +19,9 @@ export class EnderecoRepository {
         return this.repository.findOne({ where: { id } });
     };
 
-    getByUsuario = (usuarioId: number): Promise<Endereco[]> => {
-        return this.repository.find({ where: { usuarioId } });
+    getByUsuario = (usuarioId: number, filtros?: FindOptionsWhere<Endereco>): Promise<Endereco[]> => {
+        const where = filtros ? { ...filtros, usuarioId } : {usuarioId};
+        return this.repository.find({ where });
     };
 
     getByUsuarioAndId = (usuarioId: number, enderecoId: number): Promise<Endereco> => {
