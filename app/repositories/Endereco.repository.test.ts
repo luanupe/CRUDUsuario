@@ -9,6 +9,7 @@ import { EnderecoRepository } from "./Endereco.repository";
 
 const connection = new Connection();
 let usuarioId;
+let enderecoId;
 
 const dataUsuario: Partial<Usuario> = {
     nome: faker.name.findName(),
@@ -50,7 +51,7 @@ describe('Testando Endereco Repository', () => {
     describe('Testando métodos getters', () => {
         beforeEach(async () => {
             const sut = new EnderecoRepository(connection);
-            await sut.insert({ ...dataEndereco, usuarioId });
+            enderecoId = await sut.insert({ ...dataEndereco, usuarioId });
         });
         describe('Testando método getById', () => {
             it('Deve recuperar endereço do banco de dados com sucesso', async () => {
@@ -76,6 +77,18 @@ describe('Testando Endereco Repository', () => {
                 expect(result).toBeTruthy();
                 expect(result).toHaveLength(1);
                 expect(result[0]).toHaveProperty('usuarioId', usuarioId);
+            }, 5000);
+        });
+        describe('Testando método getByUsuarioAndId', () => {
+            it('Deve recuperar endereço do banco de dados com sucesso', async () => {
+                // Act
+                const sut = new EnderecoRepository(connection);
+                const result: Endereco = await sut.getByUsuarioAndId(usuarioId, enderecoId);
+
+                // Assert
+                expect(result).toBeTruthy();
+                expect(result).toHaveProperty('id', enderecoId);
+                expect(result).toHaveProperty('usuarioId', usuarioId);
             }, 5000);
         });
         describe('Testando método update', () => {
