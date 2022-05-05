@@ -6,6 +6,7 @@ import { BuscarUsuarioUsecase } from '../usecases/Usuario/BuscarUsuario.usecase'
 import { AtualizarUsuarioUsecase } from '../usecases/Usuario/AtualizarUsuario.usecase';
 import { RemoverUsuarioUsecase } from '../usecases/Usuario/RemoverUsuario.usecase';
 import { CadastrarEnderecoUsecase } from '../usecases/Endereco/CadastrarEndereco.usecase';
+import { BuscarEnderecoUsecase } from '../usecases/Endereco/BuscarEndereco.usecase';
 
 // HealthCheck
 
@@ -46,4 +47,9 @@ container.registerSingleton<RemoverUsuarioUsecase>(
 container.registerSingleton<CadastrarEnderecoUsecase>(
     'CadastrarEnderecoUsecase',
     CadastrarEnderecoUsecase,
+);
+
+container.registerSingleton<BuscarEnderecoUsecase>(
+    'BuscarEnderecoUsecase',
+    BuscarEnderecoUsecase,
 );

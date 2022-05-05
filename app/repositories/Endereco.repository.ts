@@ -23,6 +23,10 @@ export class EnderecoRepository {
         return this.repository.find({ where: { usuarioId } });
     };
 
+    getByUsuarioAndId = (usuarioId: number, enderecoId: number): Promise<Endereco> => {
+        return this.repository.findOne({ where: { id: enderecoId, usuarioId } });
+    };
+
     insert = async (data: Partial<Endereco>): Promise<number> => {
         const result = await this.repository.insert(data);
         return result.identifiers[0].id;
