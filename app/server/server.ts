@@ -3,8 +3,9 @@ import express, { Express } from "express";
 import bodyParser from "body-parser";
 import { Swagger } from "./swagger";
 import { ErrorMiddleware } from "../middlewares/Error.middleware";
-import { UsuarioRoutes } from "../routes/Usuario.routes";
 import { HealthcheckRoutes } from "../routes/Healthcheck.routes";
+import { UsuarioRoutes } from "../routes/Usuario.routes";
+import { EnderecoRoutes } from "../routes/Endereco.routes";
 
 import '../dependencies/server';
 import '../dependencies/repositories';
@@ -38,6 +39,10 @@ export class Application {
         // Usuário
         const usuarioRouter = new UsuarioRoutes('/usuario');
         usuarioRouter.setup(this.server, this.swagger);
+
+        // Endereço
+        const enderecoRouter = new EnderecoRoutes('/endereco');
+        enderecoRouter.setup(this.server, this.swagger);
 
         // Swagger
         this.swagger.setup();

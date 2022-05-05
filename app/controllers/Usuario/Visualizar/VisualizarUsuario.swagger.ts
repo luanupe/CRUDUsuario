@@ -5,31 +5,9 @@ import {
     userMock as userMockSignup,
 } from "../Cadastrar/CadastrarUsuario.swagger";
 import { genericErrorResponse, getApplicationErrorResponse, unAuthorizedErrorResponse } from "../../../contracts/Abstract.swagger";
+import { addressMock, addressRequired, addressSchema } from "../../Endereco/Visualizar/VisualizarEndereco.swagger";
 
 // Mocks
-
-const addressRequired = [ 'id', 'logradouro', 'numero', 'bairro', 'cidade', 'pais', 'cep' ];
-
-const addressSchema = {
-    id: { type: 'integer' },
-    logradouro: { type: 'string' },
-    numero: { type: 'string' },
-    bairro: { type: 'string' },
-    cidade: { type: 'string' },
-    pais: { type: 'string' },
-    cep: { type: 'string' },
-};
-
-const addressMock = {
-    id: faker.datatype.number(),
-    logradouro: faker.address.streetName(),
-    numero: faker.address.buildingNumber(),
-    bairro: faker.address.streetAddress(),
-    cidade: faker.address.cityName(),
-    estado: faker.address.state(),
-    pais: faker.address.country(),
-    cep: faker.address.zipCode(),
-};
 
 export const userRequired = [ 'id', ...userRequiredSignup ];
 
