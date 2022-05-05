@@ -7,6 +7,7 @@ import { AtualizarUsuarioController } from '../controllers/Usuario/Atualizar/Atu
 import { DeletarUsuarioController } from '../controllers/Usuario/Deletar/DeletarUsuario.controller';
 import { CadastrarEnderecoController } from '../controllers/Endereco/Cadastrar/CadastrarEndereco.controller';
 import { VisualizarEnderecoController } from '../controllers/Endereco/Visualizar/VisualizarEndereco.controller';
+import { DeletarEnderecoController } from '../controllers/Endereco/Deletar/DeletarEndereco.controller';
 
 // HealthCheck
 
@@ -52,4 +53,9 @@ container.registerSingleton<CadastrarEnderecoController>(
 container.registerSingleton<VisualizarEnderecoController>(
     'VisualizarEnderecoController',
     VisualizarEnderecoController,
+);
+
+container.registerSingleton<DeletarEnderecoController>(
+    'DeletarEnderecoController',
+    DeletarEnderecoController,
 );
