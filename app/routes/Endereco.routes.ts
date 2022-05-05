@@ -7,6 +7,8 @@ import { CadastrarEnderecoValidator } from '../controllers/Endereco/Cadastrar/Ca
 import { CadastrarEnderecoController } from '../controllers/Endereco/Cadastrar/CadastrarEndereco.controller';
 import * as visualizarEnderecoSwagger from '../controllers/Endereco/Visualizar/VisualizarEndereco.swagger';
 import { VisualizarEnderecoController } from '../controllers/Endereco/Visualizar/VisualizarEndereco.controller';
+import * as atualizarEnderecoSwagger from '../controllers/Endereco/Atualizar/AtualizarEndereco.swagger';
+import { AtualizarEnderecoController } from '../controllers/Endereco/Atualizar/AtualizarEndereco.controller';
 import * as deletarEnderecoSwagger from '../controllers/Endereco/Deletar/DeletarEndereco.swagger';
 import { DeletarEnderecoController } from '../controllers/Endereco/Deletar/DeletarEndereco.controller';
 
@@ -15,6 +17,7 @@ export class EnderecoRoutes extends AbstractRoutes {
     private jwtMiddleware: JwtMiddleware;
     private cadastrarEnderecoController: CadastrarEnderecoController;
     private visualizarEnderecoController: VisualizarEnderecoController;
+    private atualizarEnderecoController: AtualizarEnderecoController;
     private deletarEnderecoController: DeletarEnderecoController;
 
     constructor(protected prefix: string) {
@@ -22,6 +25,7 @@ export class EnderecoRoutes extends AbstractRoutes {
         this.jwtMiddleware = container.resolve(JwtMiddleware);
         this.cadastrarEnderecoController = container.resolve(CadastrarEnderecoController);
         this.visualizarEnderecoController = container.resolve(VisualizarEnderecoController);
+        this.atualizarEnderecoController = container.resolve(AtualizarEnderecoController);
         this.deletarEnderecoController = container.resolve(DeletarEnderecoController);
     }
 
@@ -39,6 +43,13 @@ export class EnderecoRoutes extends AbstractRoutes {
             this.visualizarEnderecoController.handle,
         );
 
+        this.router.put(
+            '/atualizar/:enderecoId',
+            CadastrarEnderecoValidator.validate,
+            this.jwtMiddleware.validate,
+            this.atualizarEnderecoController.handle,
+        );
+
         this.router.delete(
             '/deletar/:enderecoId',
             this.jwtMiddleware.validate,
@@ -49,6 +60,7 @@ export class EnderecoRoutes extends AbstractRoutes {
     _setupSwagger = (swagger: Swagger) => {
         swagger.addPath(`${this.prefix}/cadastrar`, 'post', cadastrarEnderecoSwagger.documentation);
         swagger.addPath(`${this.prefix}/visualizar/{enderecoId}`, 'get', visualizarEnderecoSwagger.documentation);
+        swagger.addPath(`${this.prefix}/atualizar/{enderecoId}`, 'put', atualizarEnderecoSwagger.documentation);
         swagger.addPath(`${this.prefix}/deletar/{enderecoId}`, 'delete', deletarEnderecoSwagger.documentation);
     };
 
