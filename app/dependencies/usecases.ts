@@ -6,6 +6,7 @@ import { BuscarUsuarioUsecase } from '../usecases/Usuario/BuscarUsuario.usecase'
 import { AtualizarUsuarioUsecase } from '../usecases/Usuario/AtualizarUsuario.usecase';
 import { RemoverUsuarioUsecase } from '../usecases/Usuario/RemoverUsuario.usecase';
 import { CadastrarEnderecoUsecase } from '../usecases/Endereco/CadastrarEndereco.usecase';
+import { ListarEnderecoUsecase } from '../usecases/Endereco/ListarEndereco.usecase';
 import { BuscarEnderecoUsecase } from '../usecases/Endereco/BuscarEndereco.usecase';
 import { AtualizarEnderecoUsecase } from '../usecases/Endereco/AtualizarEndereco.usecase';
 import { RemoverEnderecoUsecase } from '../usecases/Endereco/RemoverEndereco.usecase';
@@ -49,6 +50,11 @@ container.registerSingleton<RemoverUsuarioUsecase>(
 container.registerSingleton<CadastrarEnderecoUsecase>(
     'CadastrarEnderecoUsecase',
     CadastrarEnderecoUsecase,
+);
+
+container.registerSingleton<ListarEnderecoUsecase>(
+    'ListarEnderecoUsecase',
+    ListarEnderecoUsecase,
 );
 
 container.registerSingleton<BuscarEnderecoUsecase>(
