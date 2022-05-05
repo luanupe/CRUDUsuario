@@ -37,7 +37,7 @@ const successSchema = {
 
 const successExamples = {
     CREATE_ACCOUNT_SUCCESS: {
-        summary: 'Usuário criado',
+        summary: 'Endereço criado',
         value: { id: faker.datatype.number(), ...addressMock },
     },
 };
@@ -70,15 +70,15 @@ const requestBodySchema = {
 };
 
 const requestBodyExamples = {
-    CRIAR_CONTA: {
-        summary: 'Criar novo usuário',
+    CREATE_ADDRESS: {
+        summary: 'Criar novo endereço',
         value: {
             ...addressMock,
         },
     }
 };
 
-const requestBody = {
+export const requestBody = {
     required: true,
     content: {
         'application/json': {
