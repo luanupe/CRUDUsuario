@@ -56,4 +56,4 @@ Os passos a seguir devem ser utilizados para subir a aplicação na máquina loc
 ### Executando
 
 - Abra um terminal na pasta `app` deste projeto;
-- Execute a aplicação utilizando `npm run dev`.
+- Execute a aplicação utilizando `npm run start:dev`.

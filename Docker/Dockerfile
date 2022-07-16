@@ -20,4 +20,4 @@ WORKDIR ${WORKDIR}
 USER ${USER}
 EXPOSE 8080
 
-CMD npm run start
+CMD npm run start:prod
