@@ -6,11 +6,9 @@
   "license": "ISC",
   "scripts": {
     "test": "jest --silent --runInBand",
-    "dependencies": "npm install",
     "build": "node_modules/typescript/bin/tsc",
-    "dependencies:build": "npm run dependencies && npm run build",
     "start:dev": "node_modules/nodemon/bin/nodemon.js main.ts",
-    "start:prod": "/node_modules/pm2/bin/pm2-runtime dist/main.js"
+    "start:prod": "node_modules/pm2/bin/pm2-runtime dist/main.js"
   },
   "keywords": [
     "user",
