@@ -7,6 +7,7 @@
   "scripts": {
     "test": "jest --silent --runInBand",
     "build": "node_modules/typescript/bin/tsc",
+    "postinstall": "patch-package",
     "start:dev": "node_modules/nodemon/bin/nodemon.js main.ts",
     "start:prod": "node_modules/pm2/bin/pm2-runtime ./dist/main.js"
   },
@@ -23,6 +24,7 @@
     "express": "^4.18.0",
     "jsonwebtoken": "^8.5.1",
     "mysql": "^2.18.1",
+    "patch-package": "^6.4.7",
     "pm2": "^5.2.0",
     "swagger-ui-express": "^4.3.0",
     "ts-node": "^10.7.0",
