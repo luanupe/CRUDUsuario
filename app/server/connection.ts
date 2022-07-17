@@ -26,6 +26,8 @@ export class Connection {
               connectionLimit: process.env.DB_CONN_POOL,
             },
         };
+
+        console.log(this.options);
     }
 
     /* TODO Por algum motivo o tsyring está retornando 2 instâncias 
