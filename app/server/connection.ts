@@ -20,14 +20,12 @@ export class Connection {
             database: process.env.DB_NAME,
             entities: [Usuario, Endereco],
             dropSchema: process.env.DB_SCHEMA_DROP === 'true',
-            synchronize: process.env.DB_SCHEMA_SYC === 'true',
+            synchronize: process.env.DB_SCHEMA_SYNC === 'true',
             logging: false,
             extra: {
               connectionLimit: process.env.DB_CONN_POOL,
             },
         };
-
-        console.log(this.options);
     }
 
     /* TODO Por algum motivo o tsyring está retornando 2 instâncias 
