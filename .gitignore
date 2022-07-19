@@ -2,3 +2,7 @@
 app/node_modules
 app/dist
 app/.env
+Terraform/terraform.tfstate
+Terraform/terraform.tfstate.backup
+Terraform/.terraform.lock.hcl
+Terraform/.terraform

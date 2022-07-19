@@ -1,4 +1,4 @@
-name: Deploying Application
+name: Deploy Application
 
 on:
   push:
@@ -9,8 +9,9 @@ on:
 jobs:
   deploy:
     name: deploy
-    environment: Production
+    environment: production
     runs-on: ubuntu-latest
+    needs: test
 
     steps:
       - name: Checkout
