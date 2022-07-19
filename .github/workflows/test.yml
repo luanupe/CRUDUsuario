@@ -5,8 +5,8 @@ on:
 
 jobs:
   test:
-    name: testing
-    environment: test
+    name: test
+    environment: testing
     runs-on: ubuntu-latest
 
     steps:
