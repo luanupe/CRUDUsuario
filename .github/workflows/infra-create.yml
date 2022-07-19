@@ -60,11 +60,11 @@ jobs:
       - name: Init terraform
         run: >
           terraform init -get -reconfigure
-            -backend-config="access_key=${{ DIGITALOCEAN_SPACES_ACCESS_ID }}"
-            -backend-config="secret_key=${{ DIGITALOCEAN_SPACES_ACCESS_KEY }}"
-            -backend-config="key=${{ APPLICATION_NAME }}/${{ needs.prepare_create.outputs.environment }}/terraform.tfstate"
-            -backend-config="endpoint=https://${{ DIGITALOCEAN_REGION }}.digitaloceanspaces.com"
-            -backend-config="bucket=terraform-${{ APPLICATION_NAME }}"
+            -backend-config="access_key=${{ secrets.DIGITALOCEAN_SPACES_ACCESS_ID }}"
+            -backend-config="secret_key=${{ secrets.DIGITALOCEAN_SPACES_ACCESS_KEY }}"
+            -backend-config="key=${{ secrets.APPLICATION_NAME }}/${{ needs.prepare_create.outputs.environment }}/terraform.tfstate"
+            -backend-config="endpoint=https://${{ secrets.DIGITALOCEAN_REGION }}.digitaloceanspaces.com"
+            -backend-config="bucket=terraform-${{ secrets.APPLICATION_NAME }}"
       
       - name: Plan terraform
         run: >
@@ -73,14 +73,14 @@ jobs:
             -var="secret_spaces_id=${{ secrets.DIGITALOCEAN_SPACES_ACCESS_ID }}"
             -var="secret_spaces_key=${{ secrets.DIGITALOCEAN_SPACES_ACCESS_KEY }}"
             -var="project_environment=${{ needs.prepare_create.outputs.environment }}"
-            -var="application_region=${{ DIGITALOCEAN_REGION }}"
-            -var="application_name=${{ APPLICATION_NAME }}"
-            -var="application_domain=${{ APPLICATION_DOMAIN }}"
-            -var="application_subdomain=${{ APPLICATION_SUBDOMAIN }}"
+            -var="application_region=${{ secrets.DIGITALOCEAN_REGION }}"
+            -var="application_name=${{ secrets.APPLICATION_NAME }}"
+            -var="application_domain=${{ secrets.APPLICATION_DOMAIN }}"
+            -var="application_subdomain=${{ secrets.APPLICATION_SUBDOMAIN }}"
             -var="web_git_repository=${{ needs.prepare_create.outputs.repository }}"
             -var="web_git_branch=${{ needs.prepare_create.outputs.branch }}"
-            -var="web_environment_jwt_public=${{ ENVIRONMENT_JWT_PUBLIC }}"
-            -var="web_environment_jwt_private=${{ ENVIRONMENT_JWT_PRIVATE }}"
+            -var="web_environment_jwt_public=${{ secrets.ENVIRONMENT_JWT_PUBLIC }}"
+            -var="web_environment_jwt_private=${{ secrets.ENVIRONMENT_JWT_PRIVATE }}"
       
       - name: Apply terraform
         run: >
@@ -89,12 +89,12 @@ jobs:
             -var="secret_spaces_id=${{ secrets.DIGITALOCEAN_SPACES_ACCESS_ID }}"
             -var="secret_spaces_key=${{ secrets.DIGITALOCEAN_SPACES_ACCESS_KEY }}"
             -var="project_environment=${{ needs.prepare_create.outputs.environment }}"
-            -var="application_region=${{ DIGITALOCEAN_REGION }}"
-            -var="application_name=${{ APPLICATION_NAME }}"
-            -var="application_domain=${{ APPLICATION_DOMAIN }}"
-            -var="application_subdomain=${{ APPLICATION_SUBDOMAIN }}"
+            -var="application_region=${{ secrets.DIGITALOCEAN_REGION }}"
+            -var="application_name=${{ secrets.APPLICATION_NAME }}"
+            -var="application_domain=${{ secrets.APPLICATION_DOMAIN }}"
+            -var="application_subdomain=${{ secrets.APPLICATION_SUBDOMAIN }}"
             -var="web_git_repository=${{ needs.prepare_create.outputs.repository }}"
             -var="web_git_branch=${{ needs.prepare_create.outputs.branch }}"
-            -var="web_environment_jwt_public=${{ ENVIRONMENT_JWT_PUBLIC }}"
-            -var="web_environment_jwt_private=${{ ENVIRONMENT_JWT_PRIVATE }}"
+            -var="web_environment_jwt_public=${{ secrets.ENVIRONMENT_JWT_PUBLIC }}"
+            -var="web_environment_jwt_private=${{ secrets.ENVIRONMENT_JWT_PRIVATE }}"
             -auto-approve
