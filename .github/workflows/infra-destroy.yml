@@ -64,7 +64,7 @@ jobs:
             -backend-config="secret_key=${{ DIGITALOCEAN_SPACES_ACCESS_KEY }}"
             -backend-config="key=${{ APPLICATION_NAME }}/${{ needs.prepare_destroy.outputs.environment }}/terraform.tfstate"
             -backend-config="endpoint=https://${{ DIGITALOCEAN_REGION }}.digitaloceanspaces.com"
-            -backend-config="bucket=${{ APPLICATION_NAME }}-${{ needs.prepare_destroy.outputs.environment }}"
+            -backend-config="bucket=terraform-${{ APPLICATION_NAME }}"
       
       - name: Destroy terraform
         run: >
