@@ -1,0 +1,41 @@
+name: Destroy Infrastructure
+
+on:
+  workflow_dispatch:
+
+jobs:
+  production:
+    name: deploy
+    runs-on: ubuntu-latest
+    environment: production
+
+    defaults:
+      run:
+        working-directory: ./Terraform
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      
+      - name: Install terraform
+        uses: hashicorp/setup-terraform@v2
+      
+      - name: Init terraform
+        run: >
+          terraform init -get -reconfigure
+            -backend-config="access_key=${{ DIGITALOCEAN_SPACES_ACCESS_ID }}"
+            -backend-config="secret_key=${{ DIGITALOCEAN_SPACES_ACCESS_KEY }}"
+            -backend-config="key=${{ APPLICATION_NAME }}/${{ APPLICATION_ENVIRONMENT }}/terraform.tfstate"
+            -backend-config="endpoint=https://${{ DIGITALOCEAN_REGION }}.digitaloceanspaces.com"
+            -backend-config="bucket=${{ APPLICATION_NAME }}-${{ APPLICATION_ENVIRONMENT }}"
+      
+      - name: Destroy terraform
+        run: >
+          terraform destroy
+            -var="secret_token=${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}"
+            -var="secret_spaces_id=${{ secrets.DIGITALOCEAN_SPACES_ACCESS_ID }}"
+            -var="secret_spaces_key=${{ secrets.DIGITALOCEAN_SPACES_ACCESS_KEY }}"
+            -var="project_environment=${{ secrets.APPLICATION_ENVIRONMENT }}"
+            -var="application_name=${{ APPLICATION_NAME }}"
+            -var="application_region=${{ DIGITALOCEAN_REGION }}"
+            -auto-approve
