@@ -1,13 +1,50 @@
-name: Destroy Infrastructure
+name: Infrastructure Destroy
 
 on:
   workflow_dispatch:
 
 jobs:
-  production:
-    name: deploy
+  prepare_destroy:
+    name: prepare_destroy
     runs-on: ubuntu-latest
-    environment: production
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      
+      - name: Show branch
+        run: echo "Running on branch ${{ github.ref }}"
+
+      - name: Get repository
+        id: check_repository
+        run: echo ::set-output name=repository::${GITHUB_REPOSITORY#*/}-${GITHUB_SHA:0:7}
+      
+      - name: Get branch
+        id: check_branch
+        run: |
+          if [ "${{ github.ref }}" = "refs/heads/master" ]; then
+            echo "::set-output name=branch::master"
+          elif [ "${{ github.ref }}" = "refs/heads/develop" ]; then
+            echo "::set-output name=branch::develop"
+          fi   
+      
+      - name: Get environment
+        id: check_environment
+        run: |
+          if [ "${{ github.ref }}" = "refs/heads/master" ]; then
+            echo "::set-output name=environment::production"
+          elif [ "${{ github.ref }}" = "refs/heads/develop" ]; then
+            echo "::set-output name=environment::homologation"
+          fi
+    outputs:
+      repository: ${{ steps.check_repository.outputs.repository }}
+      branch: ${{ steps.check_branch.outputs.branch }}
+      environment: ${{ steps.check_environment.outputs.environment }}
+
+  destroy:
+    needs: prepare_destroy
+    runs-on: ubuntu-latest
+    if: ${{ needs.prepare_destroy.outputs.branch }} == 'master' || ${{ needs.prepare_destroy.outputs.branch }} == 'develop'
+    environment: ${{ needs.prepare_destroy.outputs.environment }}
 
     defaults:
       run:
@@ -25,9 +62,9 @@ jobs:
           terraform init -get -reconfigure
             -backend-config="access_key=${{ DIGITALOCEAN_SPACES_ACCESS_ID }}"
             -backend-config="secret_key=${{ DIGITALOCEAN_SPACES_ACCESS_KEY }}"
-            -backend-config="key=${{ APPLICATION_NAME }}/${{ APPLICATION_ENVIRONMENT }}/terraform.tfstate"
+            -backend-config="key=${{ APPLICATION_NAME }}/${{ needs.prepare_destroy.outputs.environment }}/terraform.tfstate"
             -backend-config="endpoint=https://${{ DIGITALOCEAN_REGION }}.digitaloceanspaces.com"
-            -backend-config="bucket=${{ APPLICATION_NAME }}-${{ APPLICATION_ENVIRONMENT }}"
+            -backend-config="bucket=${{ APPLICATION_NAME }}-${{ needs.prepare_destroy.outputs.environment }}"
       
       - name: Destroy terraform
         run: >
@@ -35,7 +72,13 @@ jobs:
             -var="secret_token=${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}"
             -var="secret_spaces_id=${{ secrets.DIGITALOCEAN_SPACES_ACCESS_ID }}"
             -var="secret_spaces_key=${{ secrets.DIGITALOCEAN_SPACES_ACCESS_KEY }}"
-            -var="project_environment=${{ secrets.APPLICATION_ENVIRONMENT }}"
-            -var="application_name=${{ APPLICATION_NAME }}"
+            -var="project_environment=${{ needs.prepare_destroy.outputs.environment }}"
             -var="application_region=${{ DIGITALOCEAN_REGION }}"
+            -var="application_name=${{ APPLICATION_NAME }}"
+            -var="application_domain=${{ APPLICATION_DOMAIN }}"
+            -var="application_subdomain=${{ APPLICATION_SUBDOMAIN }}"
+            -var="web_git_repository=${{ needs.prepare_destroy.outputs.repository }}"
+            -var="web_git_branch=${{ needs.prepare_destroy.outputs.branch }}"
+            -var="web_environment_jwt_public=${{ ENVIRONMENT_JWT_PUBLIC }}"
+            -var="web_environment_jwt_private=${{ ENVIRONMENT_JWT_PRIVATE }}"
             -auto-approve
